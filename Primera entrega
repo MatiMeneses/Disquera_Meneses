@@ -1,0 +1,80 @@
+	CREATE DATABASE Sello_Discografico;
+	USE Sello_Discografico;
+    
+		CREATE TABLE disquera(
+	    id_disq INT NOT NULL AUTO_INCREMENT,
+	    nombre_disquera VARCHAR(100),
+        rut_disquera VARCHAR(20),
+		contacto_disquera VARCHAR(50),
+        direccion_disquera VARCHAR(50),
+        ciudad_disquera VARCHAR(50),
+        pais_disquera VARCHAR(50),
+	    PRIMARY KEY (id_disq)
+	);
+-- Tabla artistas/Banda
+		CREATE TABLE artista(
+	    id_art INT NOT NULL AUTO_INCREMENT,
+	    nombre_banda VARCHAR(50),
+	    contacto_banda VARCHAR(50),
+        pais_origen VARCHAR(50),
+        fecha_formacion DATE,
+	    id_disq INT,
+	    PRIMARY KEY(id_art)
+        );
+        
+	ALTER TABLE artista
+	ADD CONSTRAINT fk_disq_id
+	FOREIGN KEY (id_disq) REFERENCES disquera(id_disq);   
+    
+-- tabla empleados
+        CREATE TABLE empleados(
+	    id_empleados INT NOT NULL AUTO_INCREMENT,
+	    empleado_name VARCHAR(50),
+		empleado_apellido VARCHAR(50),
+        cargo_empleado VARCHAR(50),
+	    id_disq INT,
+	    PRIMARY KEY(id_Empleados)
+	);
+
+	ALTER TABLE empleados
+	ADD CONSTRAINT fk_disqe_id
+	FOREIGN KEY (id_disq) REFERENCES disquera(id_disq); 
+
+-- tabla Album
+		CREATE TABLE album(
+	    id_album INT NOT NULL AUTO_INCREMENT,
+	    nombre_album VARCHAR(50),
+	    genero_musical VARCHAR(50),
+        fecha_publicacion date,
+	    id_art INT,
+	    PRIMARY KEY(id_album)
+        );
+ 
+ 	ALTER TABLE album
+	ADD CONSTRAINT fk_art_id
+	FOREIGN KEY (id_art) REFERENCES artista(id_art);
+ 
+-- tabla cancion
+       CREATE TABLE cancion(
+	    id_cancion INT NOT NULL AUTO_INCREMENT,
+	    nombre_cancion VARCHAR(50),
+	    duracion_cancion VARCHAR(50),
+	    id_album INT,
+	    PRIMARY KEY(id_cancion)
+        ); 
+
+ 	ALTER TABLE cancion
+	ADD CONSTRAINT fk_album_id
+	FOREIGN KEY (id_album) REFERENCES album(id_album);
+
+-- tabla votacion
+		CREATE TABLE reproducciones(
+	    id_rep INT NOT NULL AUTO_INCREMENT,
+        cant_rep INT,
+	    id_cancion INT,
+	    PRIMARY KEY(id_rep)
+        );   
+
+ 	ALTER TABLE reproducciones
+	ADD CONSTRAINT fk_cancion_id
+	FOREIGN KEY (id_cancion) REFERENCES cancion(id_cancion);
